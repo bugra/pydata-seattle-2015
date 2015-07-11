@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Trend Estimation in Time Series Signals</title>
+
+		<meta name="description" content="Trend Estimation in Time Series Signals">
+		<meta name="author" content="Bugra Akyildiz">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.css">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/night.css">
+		<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400' rel='stylesheet' type='text/css'>
+		<!-- If the query includes 'print-pdf', include the PDF print sheet
+		<link rel="stylesheet" href="css/print/p.css">-->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h2 style="line-height:1.5;"><strong>Trend Estimation </strong> <br /> in Time Series Signals</h2>
+
+				</section>
+                <section>
+                    <img src="assets/extrapolating.png" height="700" width="900"/>
+                </section>
+				<section>
+					<h2><strong>Hi!</strong></h2>
+                    <p><strong>Bugra Akyildiz</strong> </p>
+                    <p>Data Scientist at Axial</p>
+                    <p>@bugraa</p><br>
+                    <h4><strong>Machine Learning Newsletter</strong> | mln.io<h4><br>
+                    <h5 style="color:#57068C;">bugra@nyu.edu</h5>
+				</section>
+
+				<section  data-background="#b9131a">
+					<h2><strong>Axial</strong></h2>
+					<p>A network that brings private companies with investors together</p>
+                    <p>Enables business owners access to private capital markets</p>
+                    <h4>We are hiring! | axial.net</h4>
+				</section>
+
+
+
+        <section>
+                    <h3>Trend Estimation</h3>
+										<p>Family of methods to be able to detect and predict tendencies and regularities in time series signals</p>
+										<li>Seasonality(cycles) of data </li>
+				</section>
+
+<section data-markdown>
+## Trend Estimation Methods
+- Moving average filtering
+- Exponential smoothing
+- Median filtering
+- Bandpass filtering
+- Hodrick Prescott Filter
+- Gradient Boosting Regressor
+- $l_1$ trend filtering(my own library)
+</section>
+                <section>
+					<h3><b>Amnesty International Data</b></h3>
+                        <br>
+                        <h4><b>Complaints</b></h4>
+                        <ul>
+                            <li>Fear of Safety</li>
+                            <li>Getting threats</li>
+                            <li>...</li>
+                        </ul>
+                        <br>
+                        <h4><b>News</b></h4>
+                        <ul>
+                            <li>Conviction</li>
+                            <li>Execution</li>
+                            <li>Disappearance</li>
+                            <li>...</li>
+                        </ul>
+				</section>
+
+                <section>
+                        <h2> Example News</h2>
+                        <img src="assets/example-snippet-1.png" />
+                </section>
+
+                <section>
+                        <h2> Another One</h2>
+                        <img src="assets/example-snippet-2.png" />
+                </section>
+
+				<section>
+                    <h2>Machine Learning Model</h2>
+                </section>
+
+				<section>
+					<h3>Topic Modeling</h3><br>
+                    <p>The <b>unsupervised learning method</b> you apply to <b>a bunch of text</b> when you have <b>no idea</b> what to do with them</p>
+				</section>
+				<section>
+					<h3>Topic model is umbrella name for a suite of <b>graphical models</b> for discovering <b>topics or themes</b>
+                     in a <b>collection of documents.</b></h3>
+				</section>
+                <section>
+                    <h2> Why Topic Model?</h2>
+                    <ul>
+                        <li>Useful to explore the documents</li>
+                        <li>Easy to apply to unstructured documents</li>
+                        <li>Unsupervised, no need for labels</li>
+                        <li>Applicable for any medium-to-long form text</li>
+                    </ul>
+                </section>
+
+                <section>
+                        <h2> Latent Dirichlet Allocation</h2>
+                        <img src="assets/Latent_Dirichlet_allocation.svg" />
+                </section>
+
+<section data-markdown>
+### LDA
+- $M$: Number of Documents
+- $N$: Number of Words
+- $\alpha$: Dirichlet parameter on document-topic
+- $\beta$: Dirichlet parameter topic-word
+- $\theta_i$: Topic distribution of the document $i$
+- $\phi_k$: Word distribution for topic $k$
+- $w_{ij}$: $j$th word of of $i$th document
+- $z_{ij}$: topic assignment of the word above
+</section>
+
+<section data-markdown>
+### Observed
+- $w_{ij}$
+
+</section>
+
+<section data-markdown>
+### How?
+- Generate $\theta_i \sim Dir(\alpha)$
+- Generate $\theta_k \sim Dir(\beta)$
+- For each document $i$ and word $j$:
+    - Choose a topic $z_{ij} \sim Multinomial(\theta_i)$
+    - Choose a word $w_{ij}$ from
+    - $Multinomial( {\phi_z}_ij )$
+</section>
+
+<section data-markdown>
+### Dirichlet Distribution
+</section>
+
+<section>
+<h3> Alpha=0.1</h3>
+<img src="assets/alpha_01.png"/>
+</section>
+
+<section>
+<h3> Alpha=1</h3>
+<img src="assets/alpha_1.png"/>
+</section>
+
+<section>
+<h3> Alpha=10</h3>
+<img src="assets/alpha_10.png"/>
+</section>
+
+<section>
+<h3> Alpha=100</h3>
+<img src="assets/alpha_100.png"/>
+</section>
+
+
+                <section>
+					<h2>Topics</h2>
+                    <h4>https://datadive.herokuapp.com/</h4>
+				</section>
+
+				<section>
+                    <h2>Topics Represented as Graph</h2>
+					<h4>https://datadive.herokuapp.com/graph_clusters</h4>
+				</section>
+
+                <section>
+                    <h3> Every color represents a topic</h3>
+                    <img src="assets/graph-clusters.png"/>
+                </section>
+
+                <section>
+                    <h2> Fear of Safety</h2>
+                </section>
+				<section>
+					<img src="assets/green-1.png" />
+				</section>
+				<section>
+					<img src="assets/green-2.png" />
+				</section>
+				<section>
+					<img src="assets/green-3.png" />
+				</section>
+                <section>
+                    <h2> Execution</h2>
+                </section>
+				<section>
+					<img src="assets/orange-1.png" />
+				</section>
+				<section>
+					<img src="assets/orange-2.png" />
+				</section>
+				<section>
+					<img src="assets/orange-3.png" />
+				</section>
+                <section>
+                    <h2>Disappearance</h2>
+                </section>
+				<section>
+					<img src="assets/pink-1.png" />
+				</section>
+				<section>
+					<img src="assets/pink-2.png" />
+				</section>
+
+
+
+                <section>
+                    <h2>If all you have is a hammer, everything looks like a nail</h2>
+                </section>
+
+                <section>
+					<h2>Not everything has to be a clustering problem.</h2>
+				</section>
+
+                <section>
+                    <h2>Know its limitations</h2>
+				</section>
+                <section>
+                    <h2>Variants</h2>
+                    <h3>Correlated Topic Models</h3>
+                    <h3>Dynamic Topic Models</h3>
+                    <h3>Supervised Topic Models</h3>
+                    <h3>Turbo Topics</h3>
+                    <h4>...</h4>
+                </section>
+
+				<section>
+					<h2><strong>Tools</strong></h2>
+                    <ul>
+                        <li>Factorie (Scala)</li>
+                        <li>Mallet (Java)</li>
+                        <li>Gensim (Python)</li>
+                        <li>Stanford Topic Modeling Toolbox (Scala)</li>
+                    </ul><br><br>
+                    <a href="https://www.cs.princeton.edu/~blei/topicmodeling.html">Blei's Topic Modeling Page</a>
+				</section>
+
+				<section>
+					<h2><strong>Questions?</strong></h2>
+				</section>
+
+<section data-markdown>
+## References
+- [Introduction to Dirichlet Distribution and Related Processes](https://www.ee.washington.edu/techsite/papers/documents/UWEETR-2010-0006.pdf)
+- [Introduction to Probabilistiic Topic Models](https://www.cs.princeton.edu/~blei/papers/Blei2012.pdf)
+- [Review of Topic Models](https://www.cs.princeton.edu/~blei/papers/BleiLafferty2009.pdf)
+- [A tutorial on Topic Models](https://www.cs.princeton.edu/~blei/papers/icml-2012-tutorial.pdf)
+</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: false,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+
+                math: {
+                    mathjax: 'http://cdn.mathjax.org/mathjax/latest/MathJax.js',
+                    config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+                },
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/math/math.js', async: true }, // Necessary for mathjax plugin
+
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
