@@ -1,2 +1,1 @@
-### Next ML 2015 Slides 
-- Topic Modeling for Amnesty International Data
+### PyData Seattle Trend Estimation in Time Series Signals Deck + Notebooks
