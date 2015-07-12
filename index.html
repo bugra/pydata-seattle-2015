@@ -70,6 +70,8 @@
         <section>
                     <h3>Trend Estimation</h3>
 										<p>Family of methods to be able to detect and predict tendencies and regularities in time series signals</p>
+										<br>
+										<li> Long Term Trend </li>
 										<li>Seasonality(cycles) of data </li>
 				</section>
 
@@ -83,29 +85,61 @@
 - Gradient Boosting Regressor
 - $l_1$ trend filtering(my own library)
 </section>
-                <section>
-					<h3><b>Amnesty International Data</b></h3>
-                        <br>
-                        <h4><b>Complaints</b></h4>
-                        <ul>
-                            <li>Fear of Safety</li>
-                            <li>Getting threats</li>
-                            <li>...</li>
-                        </ul>
-                        <br>
-                        <h4><b>News</b></h4>
-                        <ul>
-                            <li>Conviction</li>
-                            <li>Execution</li>
-                            <li>Disappearance</li>
-                            <li>...</li>
-                        </ul>
-				</section>
 
-                <section>
-                        <h2> Example News</h2>
-                        <img src="assets/example-snippet-1.png" />
-                </section>
+<section data-markdown>
+## Moving Average Filtering
+
+$$y(t) = \displaystyle\sum_{i=-\frac{N+1}{2}}^{\frac{N+1}{2}} x(t + i) $$
+</section>
+
+<section data-markdown>
+```python
+
+import pandas as pd
+def moving_average(series_signal, window):
+	"""
+	Params:
+		series_signal(pd.Series): Original Signal
+		window(int): window size
+	Returns:
+		average_signal(pd.Series): Moving Averaged Signal
+
+	"""
+	return pd.rolling_mean(series_signal, window)
+```
+</section>
+
+<section>
+<h2> Moving Average Filtering Plot</h2>
+<img src="assets/example-snippet-1.png" />
+</section>
+
+<section data-markdown>
+## Weighted Average Filtering
+</section>
+
+<section data-markdown>
+## Exponential Smoothing
+
+$$y(t) = \displaystyle\sum_{i=-\frac{N+1}{2}}^{\frac{N+1}{2}} x(t + i) $$
+</section>
+
+<section data-markdown>
+## Median Filtering
+$$ y(t) = median\\{ x[t-\frac{w}{2}, t+\frac{w}{2}] \\} $$
+where $w$ is the window size whose median will replace the original data point
+
+</section>
+
+<section>
+<h2> Median Filtering Plot</h2>
+<img src="assets/example-snippet-1.png" />
+</section>
+
+<section>
+<h2> Example News</h2>
+<img src="assets/example-snippet-1.png" />
+</section>
 
                 <section>
                         <h2> Another One</h2>
