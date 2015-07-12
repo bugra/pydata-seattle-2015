@@ -129,12 +129,20 @@ where $w$ is the window size whose median will replace the original data point
 <img src="assets/Median_Filtered_signal_with_window_=_61.png" />
 </section>
 
-
 <section data-markdown>
 ## Exponential Smoothing
+$$ y_t = \frac{\displaystyle\sum_{i=0}}^t w_i x_{t-i}{\displaystyle\sum_{i=0}^t w_i} $$
 
-$$y(t) = \displaystyle\sum_{i=-\frac{N+1}{2}}^{\frac{N+1}{2}} x(t + i) $$
 </section>
+
+<section data-markdown>
+$$ w_i = \begin{cases}
+		\alpha (1 - \alpha)^i  if i \le t \\
+		 \frac{100-x}{100} & 0\leq x\leq 100 \\
+		 0 & 100\leq x
+		 \end{cases} $$
+</section>
+
 
 <section>
 <img src="assets/Exponential_Smoothed_signal_with_span_=_11.png" />
