@@ -54,7 +54,7 @@
                     <p><strong>Bugra Akyildiz</strong> </p>
                     <p>Data Scientist at Axial</p>
                     <p>@bugraa</p><br>
-                    <h4><strong>Machine Learning Newsletter</strong> | mln.io<h4><br>
+                    <h4><strong>Machine Learning Newsletter </strong>| <strong>mln.io</strong></h4><br>
                     <h5 style="color:#57068C;">bugra@nyu.edu</h5>
 										<br>
 										<h5>http://bit.ly/pydata-seattle-2015</h5>
@@ -182,6 +182,45 @@ $$y_t = x_t + c_t$$
 
 <section>
 <img src="assets/Trend_and_Cycle_Signal_with_smoothing_parameter:_1000000.png" />
+</section>
+
+<section data-markdown>
+## $l_1$ Trend Filtering
+- Optimization function:
+$$ \frac{1}{2} \lVert x - y \rVert_2^2 + \lambda \lVert Dx \rVert_1$$
+where  $x,y \in \mathbf{R}^n$ and $D$ is the second order difference matrix
+
+- [Project Page](http://stanford.edu/~boyd/papers/l1_trend_filter.html)
+- [Paper](http://web.stanford.edu/~gorin/papers/l1_trend_filter.pdf)
+</section>
+
+<section>
+<img src="assets/l_1_Trend_Signal_with_regularizer:_1.png" />
+</section>
+
+<section>
+<img src="assets/l_1_Trend_Signal_with_regularizer:_10.png" />
+</section>
+
+<section>
+<img src="assets/l_1_Trend_Signal_with_regularizer:_100.png" />
+</section>
+
+<section data-markdown>
+## Bandpass Filtering
+
+</section>
+
+<section>
+<img src="assets/Band_pass_Filtered_Signal_with_order:_2,_cutoff_frequency:_0.1.png" />
+</section>
+
+<section>
+<img src="assets/Band_pass_Filtered_Signal_with_order:_2,_cutoff_frequency:_0.01.png" />
+</section>
+
+<section>
+<img src="assets/Band_pass_Filtered_Signal_with_order:_8,_cutoff_frequency:_0.01.png" />
 </section>
 
 <!--
