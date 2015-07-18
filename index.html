@@ -17,7 +17,7 @@
 		<link rel="stylesheet" href="css/reveal.css">
 
 		<!-- For syntax highlighting -->
-		<link rel="stylesheet" href="lib/css/night.css">
+		<link rel="stylesheet" href="lib/css/zenburn.css">
 		<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400' rel='stylesheet' type='text/css'>
 		<!-- If the query includes 'print-pdf', include the PDF print sheet
 		<link rel="stylesheet" href="css/print/p.css">-->
@@ -85,6 +85,13 @@
 - $l_1$ trend filtering
 </section>
 
+<section data-markdown>
+## Data
+- The S&P 500, or the Standard & Poor's 500, is an American stock market index based on the market capitalizations of 500 large companies having common stock listed on the NYSE or NASDAQ.
+- The S&P 500 index components and their weightings are determined by S&P Dow Jones Indices.
+- The National Bureau of Economic Research has classified common stocks as a leading indicator of __business cycles__.
+</section>
+
 <section>
 <h4> SNP 500 Data</h4>
 <img src="assets/SNP_500_Close_Price_between_2014_01_01___2015_07_11.png" />
@@ -94,7 +101,7 @@
 <section data-markdown>
 ## Moving Average Filtering
 
-$$y(t) = \displaystyle\sum_{i=-\frac{w}{2}}^{\frac{w}{2}} x(t + i) $$
+$$y(t) = \frac{\displaystyle\sum_{i=-\frac{w}{2}}^{\frac{w}{2}} x(t + i)}{w} $$
 </section>
 
 <section>
@@ -131,18 +138,8 @@ where $w$ is the window size whose median will replace the original data point
 
 <section data-markdown>
 ## Exponential Smoothing
-$$ y_t = \frac{\displaystyle\sum_{i=0}}^t w_i x_{t-i}{\displaystyle\sum_{i=0}^t w_i} $$
-
+$$ y_t = \frac{\displaystyle\sum_i^t w_i x_t-i}{\displaystyle\sum_i^t w_i} $$
 </section>
-
-<section data-markdown>
-$$ w_i = \begin{cases}
-		\alpha (1 - \alpha)^i  if i \le t \\
-		 \frac{100-x}{100} & 0\leq x\leq 100 \\
-		 0 & 100\leq x
-		 \end{cases} $$
-</section>
-
 
 <section>
 <img src="assets/Exponential_Smoothed_signal_with_span_=_11.png" />
@@ -156,6 +153,36 @@ $$ w_i = \begin{cases}
 <img src="assets/Exponential_Smoothed_signal_with_span_=_61.png" />
 </section>
 
+<section data-markdown>
+## Trend and Cycle
+- Cycle part => short term
+- Trend part => medium to long term
+
+</section>
+
+<section data-markdown>
+## Hodrick-Prescott Filter
+Hodrick Prescott filter is a bandpass filter where it tries to decompose the time-series signal into a trend $x_t$ (mid-term growth) and a cylical component(recurring and seasonal signal) $c_t$.
+
+$$y_t = x_t + c_t$$
+</section>
+
+<section>
+<h2> HP Minimization Function </h2>
+<img src="assets/hodrick-prescott-filter-minimization.png" height="200" width="500"/>
+</section>
+
+<section>
+<img src="assets/Trend_and_Cycle_Signal_with_smoothing_parameter:_10.png" />
+</section>
+
+<section>
+<img src="assets/Trend_and_Cycle_Signal_with_smoothing_parameter:_1000.png" />
+</section>
+
+<section>
+<img src="assets/Trend_and_Cycle_Signal_with_smoothing_parameter:_1000000.png" />
+</section>
 
 <!--
 <section data-markdown>
