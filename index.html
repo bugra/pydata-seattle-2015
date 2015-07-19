@@ -46,33 +46,35 @@
 					<h2 style="line-height:1.5;"><strong>Trend Estimation </strong> <br /> in Time Series Signals</h2>
 
 				</section>
-                <section>
-                    <img src="assets/extrapolating.png" height="700" width="900"/>
-                </section>
+
+        <section>
+            <img src="assets/extrapolating.png" height="700" width="900"/>
+        </section>
+				
 				<section>
 					<h2><strong>Hi!</strong></h2>
-                    <p><strong>Bugra Akyildiz</strong> </p>
-                    <p>Data Scientist at Axial</p>
-                    <p>@bugraa</p><br>
-                    <h4><strong>Machine Learning Newsletter </strong>| <strong>mln.io</strong></h4><br>
-                    <h5 style="color:#57068C;">bugra@nyu.edu</h5>
-										<br>
-										<h5>http://bit.ly/pydata-seattle-2015</h5>
+          <p><strong>Bugra Akyildiz</strong> </p>
+          <p>Data Scientist at Axial</p>
+          <p>@bugraa</p><br>
+          <h4><strong>Machine Learning Newsletter </strong>| <strong>mln.io</strong></h4><br>
+          <h5 style="color:#57068C;">bugra@nyu.edu</h5>
+					<br>
+					<h5>http://bit.ly/pydata-seattle-2015</h5>
 				</section>
 
 				<section  data-background="#b9131a">
 					<h2><strong>Axial</strong></h2>
 					<p>A network that brings private companies with investors together</p>
-                    <p>Enables business owners access to private capital markets</p>
-                    <h4>We are hiring! | axial.net</h4>
+          <p>Enables business owners access to private capital markets</p>
+          <h4>We are hiring! | axial.net</h4>
 				</section>
 
         <section>
-                    <h3>Trend Estimation</h3>
-										<p>Family of methods to be able to detect and predict tendencies and regularities in time series signals</p>
-										<br>
-										<li> Long Term Trend </li>
-										<li>Seasonality(cycles) of data </li>
+          <h3>Trend Estimation</h3>
+					<p>Family of methods to be able to detect and predict tendencies and regularities in time series signals</p>
+					<br>
+					<li> Long Term Trend </li>
+					<li>Seasonality(cycles) of data </li>
 				</section>
 
 <section data-markdown>
@@ -194,7 +196,8 @@ ewma_signal = pd.stats.moments.ewma(df.Close, span=span)
 
 <section data-markdown>
 ## Hodrick-Prescott Filter
-Hodrick Prescott filter is a bandpass filter where it tries to decompose the time-series signal into a trend $x_t$ (mid-term growth) and a cylical component(recurring and seasonal signal) $c_t$.
+- Bandpass filter
+- Decomposes the time-series signal into a trend $x_t$ (mid-term growth) and a cylical component(recurring and seasonal signal) $c_t$.
 
 $$y_t = x_t + c_t$$
 </section>
@@ -288,8 +291,9 @@ bandpass_filtered = sp_signal.filtfilt(b, a, df.Close.values)
 <img src="assets/Band_pass_Filtered_Signal_with_order:_8,_cutoff_frequency:_0.01.png" />
 </section>
 
-<section>
-	<h2><strong>Questions?</strong></h2>
+<section data-markdown>
+### Thanks for listening!
+#### Questions?
 </section>
 
 			</div>
