@@ -264,6 +264,18 @@ l1_trend = l1(df.Close.values, regularizer)
 - Similar to Hodrick-Prescott Filter, it extracts mid-term trend by removing very small changes(bias) and extracting short-term changes(cycle).
 </section>
 
+<section data-markdown>
+## In Python
+```python
+## Filter Construction
+filter_order  = 2
+low_cutoff_frequency = 0.001
+high_cutoff_frequency = 0.15
+b, a = sp_signal.butter(filter_order, [low_cutoff_frequency, high_cutoff_frequency], btype='bandpass', output='ba')
+bandpass_filtered = sp_signal.filtfilt(b, a, df.Close.values)
+```
+</section>
+
 <section>
 <img src="assets/Band_pass_Filtered_Signal_with_order:_2,_cutoff_frequency:_0.1.png" />
 </section>
