@@ -90,6 +90,12 @@
 - The S&P 500, or the Standard & Poor's 500, is an American stock market index based on the market capitalizations of 500 large companies having common stock listed on the NYSE or NASDAQ.
 - The S&P 500 index components and their weightings are determined by S&P Dow Jones Indices.
 - The National Bureau of Economic Research has classified common stocks as a leading indicator of __business cycles__.
+
+```python
+import pandas as pd
+df = pd.read_csv(_SNP_500_PATH, parse_dates=['Date'])
+df = df.sort(['Date'])
+```
 </section>
 
 <section>
@@ -102,6 +108,15 @@
 ## Moving Average Filtering
 
 $$y(t) = \frac{\displaystyle\sum_{i=-\frac{w}{2}}^{\frac{w}{2}} x(t + i)}{w} $$
+</section>
+
+<section data-markdown>
+### In Python
+```python
+import pandas as pd
+window = 11
+averaged_signal = pd.rolling_mean(df.Close, window)
+```
 </section>
 
 <section>
@@ -123,6 +138,14 @@ where $w$ is the window size whose median will replace the original data point
 
 </section>
 
+<section data-markdown>
+### In Python
+```python
+from scipy import signal as sp_signal
+window = 11
+median_filtered_signal = sp_signal.medfilt(df.Close, window)
+```
+</section>
 
 <section>
 <img src="assets/Median_Filtered_signal_with_window_=_11.png" />
@@ -136,9 +159,18 @@ where $w$ is the window size whose median will replace the original data point
 <img src="assets/Median_Filtered_signal_with_window_=_61.png" />
 </section>
 
+<section>
+<h2> Exponential Smoothing </h2>
+<img src="assets/ewma-formulas.png" />
+</section>
+
 <section data-markdown>
-## Exponential Smoothing
-$$ y_t = \frac{\displaystyle\sum_i^t w_i x_t-i}{\displaystyle\sum_i^t w_i} $$
+### In Python
+```python
+import pandas as pd
+span = 20
+ewma_signal = pd.stats.moments.ewma(df.Close, span=span)
+```
 </section>
 
 <section>
@@ -172,6 +204,15 @@ $$y_t = x_t + c_t$$
 <img src="assets/hodrick-prescott-filter-minimization.png" height="200" width="500"/>
 </section>
 
+<section data-markdown>
+### In Python
+```python
+import statsmodels.api as sm
+lamb = 10 # Regularizer, lambda
+snp_cycle, snp_trend = sm.tsa.filters.hpfilter(df.Close, lamb=lamb)
+```
+</section>
+
 <section>
 <img src="assets/Trend_and_Cycle_Signal_with_smoothing_parameter:_10.png" />
 </section>
@@ -194,6 +235,15 @@ where  $x,y \in \mathbf{R}^n$ and $D$ is the second order difference matrix
 - [Paper](http://web.stanford.edu/~gorin/papers/l1_trend_filter.pdf)
 </section>
 
+<section data-markdown>
+### In Python
+```python
+from l1 import l1 # Get the library from: https://github.com/bugra/l1
+regularizer = 1
+l1_trend = l1(df.Close.values, regularizer)
+```
+</section>
+
 <section>
 <img src="assets/l_1_Trend_Signal_with_regularizer:_1.png" />
 </section>
@@ -208,7 +258,10 @@ where  $x,y \in \mathbf{R}^n$ and $D$ is the second order difference matrix
 
 <section data-markdown>
 ## Bandpass Filtering
-
+- Allow certain frequencies of the signal(between `low cutoff frequency` and `high cutoff frequency`) and attenuates the other frequencies.
+- Could prepare different bandpass filters to stop a particular band as well(called band-stop filter).
+- Bandpass filter provides a nice way to remove/attenuate low frequency and high frequency in the signal.
+- Similar to Hodrick-Prescott Filter, it extracts mid-term trend by removing very small changes(bias) and extracting short-term changes(cycle).
 </section>
 
 <section>
@@ -222,12 +275,6 @@ where  $x,y \in \mathbf{R}^n$ and $D$ is the second order difference matrix
 <section>
 <img src="assets/Band_pass_Filtered_Signal_with_order:_8,_cutoff_frequency:_0.01.png" />
 </section>
-
-<!--
-<section data-markdown>
-## Weighted Average Filtering
-</section>
--->
 
 <section>
 	<h2><strong>Questions?</strong></h2>
