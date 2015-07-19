@@ -73,14 +73,15 @@
           <h3>Trend Estimation</h3>
 					<p>Family of methods to be able to detect and predict tendencies and regularities in time series signals</p>
 					<br>
-					<li> Long Term Trend </li>
-					<li>Seasonality(cycles) of data </li>
+					<li> Mid to Long Term Trend </li>
+					<li> Seasonality(cycles) of data </li>
+					<li> When original signal is not very useful for processing </li>
 				</section>
 
 <section data-markdown>
 ## Trend Estimation Methods
 - Moving average filtering
-- Exponential smoothing
+- Exponential smoothing Average Signal
 - Median filtering
 - Bandpass filtering
 - Hodrick Prescott Filter
@@ -109,7 +110,7 @@ df = df.sort(['Date'])
 <section data-markdown>
 ## Moving Average Filtering
 
-$$y(t) = \frac{\displaystyle\sum_{i=-\frac{w}{2}}^{\frac{w}{2}} x(t + i)}{w} $$
+$$ y(t) = \frac{\displaystyle\sum_{i=-\frac{w}{2}}^{\frac{w}{2}} x(t + i)}{w} $$
 </section>
 
 <section data-markdown>
@@ -162,7 +163,7 @@ median_filtered_signal = sp_signal.medfilt(df.Close, window)
 </section>
 
 <section>
-<h2> Exponential Smoothing </h2>
+<h2> Exponential Smoothing Mean Average </h2>
 <img src="assets/ewma-formulas.png" />
 </section>
 
@@ -241,6 +242,11 @@ $$y_t = x_t + c_t$$
 </section>
 
 <section data-markdown>
+## Properties
+- Linear
+</section>
+
+<section data-markdown>
 ### In Python
 ```python
 import statsmodels.api as sm
@@ -267,9 +273,17 @@ snp_cycle, snp_trend = sm.tsa.filters.hpfilter(df.Close, lamb=lamb)
 $$ \frac{1}{2} \lVert x - y \rVert_2^2 + \lambda \lVert Dx \rVert_1$$
 where  $x,y \in \mathbf{R}^n$ and $D$ is the second order difference matrix
 
-- [Project Page](http://stanford.edu/~boyd/papers/l1_trend_filter.html)
-- [Paper](http://web.stanford.edu/~gorin/papers/l1_trend_filter.pdf)
+
+- Produces trend estimates that are piecewise linear
+- The kinks, or changes in slope of the estimated trend signify abrupt events
+
 </section>
+
+<section data-markdown>
+## Properties
+- Nonlinear
+- Trend is piecewise linear, generally very smooth
+- Changes in trend could be used for outlier detection
 
 <section data-markdown>
 ### In Python
