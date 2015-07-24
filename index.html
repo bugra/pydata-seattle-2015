@@ -79,14 +79,14 @@
 					<h4> Why? </h4>
 					<ul>
 						<li> Trends are very interpretable </li>
-						<li> Trends are easy to deal with whenee original signal is not very useful for processing </li>
+						<li> Trends are easy to deal with when original signal is not very useful for processing </li>
 					</ul>
 				</section>
 
 <section data-markdown>
 ## Trend Estimation Methods
 - Moving average filtering
-- Exponential Weighted Moving Average Signal(EWMA)
+- Exponential Weighted Moving Average (EWMA)
 - Median filtering
 - Bandpass filtering
 - Hodrick Prescott Filter
@@ -242,12 +242,13 @@ trend in the signal.
 filter_order  = 2
 low_cutoff_frequency = 0.001
 high_cutoff_frequency = 0.15
-b, a = sp_signal.butter(filter_order, [low_cutoff_frequency, high_cutoff_frequency], btype='bandpass', output='ba')
+b, a = sp_signal.butter(filter_order, [low_cutoff_frequency, high_cutoff_frequency],
+						btype='bandpass', output='ba')
 bandpass_filtered = sp_signal.filtfilt(b, a, df.Close.values)
 ```
 </section>
 
-<section>
+<section data-markdown>
 ## Good to Know
 - Allow certain frequencies of the signal(between `low cutoff frequency` and `high cutoff frequency`) and attenuates the other frequencies.
 - This provides a flexible way to remove/attenuate low frequency(very long term) and high frequency(short-term) in the signal.
@@ -288,8 +289,10 @@ $$y_t = x_t + c_t$$
 - Decomposes the signal into two distinct components(trend and cycle)
 - Cycle part => short term, season
 - Trend part => medium to long term
+- With changing regularizer, smoothing can be adjusted in the signal
 - Bandpass filter is at its heart
 - Perfect for signals that show seasonality
+- Yields good results when noise is normally distributed
 
 </section>
 
@@ -333,6 +336,7 @@ where  $x,y \in \mathbf{R}^n$ and $D$ is the second order difference matrix
 - The kinks, or changes in slope of the estimated trend show abrupt events
 - Changes in trend could be used for outlier detection
 - Computationally a little bit expensive.
+- Yields good results when noise is exponentially distributed
 
 </section>
 
