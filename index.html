@@ -37,14 +37,11 @@
 	</head>
 
 	<body>
-
 		<div class="reveal">
-
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section>
 					<h2 style="line-height:1.5;"><strong>Trend Estimation </strong> <br /> in Time Series Signals</h2>
-
 				</section>
 
         <section>
@@ -73,19 +70,22 @@
           <h3>Trend Estimation</h3>
 					<p>Family of methods to be able to detect and predict tendencies and regularities in time series signals</p>
 					<br>
-					<li> Mid to Long Term Trend </li>
-					<li> Seasonality(cycles) of data </li>
-					<li> When original signal is not very useful for processing </li>
+					<ul>
+						<li> Mid to Long Term Trend </li>
+						<li> Seasonality(cycles) of data </li>
+						<li> When original signal is not very useful for processing </li>
+					</ul>
 				</section>
 
 <section data-markdown>
 ## Trend Estimation Methods
 - Moving average filtering
-- Exponential smoothing Average Signal
+- Exponential Weighted Moving Average Signal(EWMA)
 - Median filtering
 - Bandpass filtering
 - Hodrick Prescott Filter
 - $l_1$ trend filtering
+
 </section>
 
 <section data-markdown>
@@ -93,6 +93,7 @@
 - The S&P 500, or the Standard & Poor's 500, is an American stock market index based on the market capitalizations of 500 large companies having common stock listed on the NYSE or NASDAQ.
 - The S&P 500 index components and their weightings are determined by S&P Dow Jones Indices.
 - The National Bureau of Economic Research has classified common stocks as a leading indicator of __business cycles__.
+- We will come to these _cycles_ later.
 
 ```python
 import pandas as pd
@@ -106,9 +107,9 @@ df = df.sort(['Date'])
 <img src="assets/SNP_500_Close_Price_between_2014_01_01___2015_07_11.png" />
 </section>
 
-
 <section data-markdown>
 ## Moving Average Filtering
+- Trend is the moving average of the signal
 
 $$ y(t) = \frac{\displaystyle\sum_{i=-\frac{w}{2}}^{\frac{w}{2}} x(t + i)}{w} $$
 </section>
@@ -120,6 +121,16 @@ import pandas as pd
 window = 11
 averaged_signal = pd.rolling_mean(df.Close, window)
 ```
+</section>
+
+<section data-markdown>
+## Good to Know
+- Linear
+- Not really a trend estimation method, but provides baseline
+- If the window size is small, it removes high volatility part in the signal
+- If the window size is large, it exposes the long-term trend
+- Not robust to outliers and abrupt changes for small and medium window sizes
+
 </section>
 
 <section>
@@ -150,6 +161,17 @@ median_filtered_signal = sp_signal.medfilt(df.Close, window)
 ```
 </section>
 
+<section data-markdown>
+## Good to Know
+- Nonlinear
+- Very robust to noise
+- Hard to measure outliers and very significant short term changes
+- If the window size is very large, it could _shadow_ mid-term change
+- Trend signal may not be smooth(actually rarely is in practice)
+
+</section>
+
+
 <section>
 <img src="assets/Median_Filtered_signal_with_window_=_11.png" />
 </section>
@@ -163,7 +185,7 @@ median_filtered_signal = sp_signal.medfilt(df.Close, window)
 </section>
 
 <section>
-<h2> Exponential Smoothing Mean Average </h2>
+<h2> EWMA </h2>
 <img src="assets/ewma-formulas.png" />
 </section>
 
@@ -175,6 +197,18 @@ span = 20
 ewma_signal = pd.stats.moments.ewma(df.Close, span=span)
 ```
 </section>
+
+<section data-markdown>
+## Good to Know
+- Linear
+- Could provide a better estimate than a simple moving average because the weights
+are better distributed
+- Not robust to outliers and abrupt changes
+- Very flexible in terms of weights and puts more emphasis on the spatial window
+in the signal
+
+</section>
+
 
 <section>
 <img src="assets/Exponential_Smoothed_signal_with_span_=_11.png" />
@@ -189,18 +223,11 @@ ewma_signal = pd.stats.moments.ewma(df.Close, span=span)
 </section>
 
 <section data-markdown>
-## Trend and Cycle
-- Cycle part => short term
-- Trend part => medium to long term
-
-</section>
-
-<section data-markdown>
 ## Bandpass Filtering
-- Allow certain frequencies of the signal(between `low cutoff frequency` and `high cutoff frequency`) and attenuates the other frequencies.
-- Could prepare different bandpass filters to stop a particular band as well(called band-stop filter).
-- Bandpass filter provides a nice way to remove/attenuate low frequency and high frequency in the signal.
-- Similar to Hodrick-Prescott Filter, it extracts mid-term trend by removing very small changes(bias) and extracting short-term changes(cycle).
+It filters based on __frequency response__ of the signal. It attenuates very low range
+(long term) and very high frequency(short-term, volatility) and exposes mid-term
+trend in the signal.
+
 </section>
 
 <section data-markdown>
@@ -213,6 +240,15 @@ high_cutoff_frequency = 0.15
 b, a = sp_signal.butter(filter_order, [low_cutoff_frequency, high_cutoff_frequency], btype='bandpass', output='ba')
 bandpass_filtered = sp_signal.filtfilt(b, a, df.Close.values)
 ```
+</section>
+
+<section>
+## Good to Know
+- Allow certain frequencies of the signal(between `low cutoff frequency` and `high cutoff frequency`) and attenuates the other frequencies.
+- This provides a flexible way to remove/attenuate low frequency(very long term) and high frequency(short-term) in the signal.
+- Could prepare different filters to stop a particular band as well(called band-stop filter).
+- Similar to Hodrick-Prescott Filter, it extracts mid-term trend by removing very small changes(bias) and extracting short-term changes(cycle).
+
 </section>
 
 <section>
@@ -229,9 +265,9 @@ bandpass_filtered = sp_signal.filtfilt(b, a, df.Close.values)
 
 
 <section data-markdown>
-## Hodrick-Prescott Filter
-- Bandpass filter
-- Decomposes the time-series signal into a trend $x_t$ (mid-term growth) and a cylical component(recurring and seasonal signal) $c_t$.
+## Hodrick-Prescott(HP) Filter
+- Decomposes the time-series signal into a trend $x_t$ (mid-term growth) and a
+cyclical component(recurring and seasonal signal) $c_t$.
 
 $$y_t = x_t + c_t$$
 </section>
@@ -242,8 +278,14 @@ $$y_t = x_t + c_t$$
 </section>
 
 <section data-markdown>
-## Properties
+## Good to Know
 - Linear
+- Decomposes the signal into two distinct components(trend and cycle)
+- Cycle part => short term, season
+- Trend part => medium to long term
+- Bandpass filter is at its heart
+- Perfect for signals that show seasonality
+
 </section>
 
 <section data-markdown>
@@ -269,23 +311,35 @@ snp_cycle, snp_trend = sm.tsa.filters.hpfilter(df.Close, lamb=lamb)
 
 <section data-markdown>
 ## $l_1$ Trend Filtering
+Explanation: Instead of minimizing the mean squared error in HP minimization
+function, what if we minimize by $l_1$ error? We could get a very robust way
+to measure trend in the signal.
+
 - Optimization function:
 $$ \frac{1}{2} \lVert x - y \rVert_2^2 + \lambda \lVert Dx \rVert_1$$
 where  $x,y \in \mathbf{R}^n$ and $D$ is the second order difference matrix
 
+</section>
 
-- Produces trend estimates that are piecewise linear
-- The kinks, or changes in slope of the estimated trend signify abrupt events
+<section data-markdown>
+## Good to Know
+- Nonlinear
+- Trend is piecewise linear, generally very smooth
+- The kinks, or changes in slope of the estimated trend show abrupt events
+- Changes in trend could be used for outlier detection
+- Computationally a little bit expensive.
 
 </section>
 
 <section data-markdown>
-## Properties
-- Nonlinear
-- Trend is piecewise linear, generally very smooth
-- Changes in trend could be used for outlier detection
-
-<section data-markdown>
+### Get the library
+```bash
+# See the source code: https://github.com/bugra/l1
+# PRs are more than welcome!
+git clone https://github.com/bugra/l1
+cd l1
+python setup.py install
+```
 ### In Python
 ```python
 from l1 import l1 # Get the library from: https://github.com/bugra/l1
@@ -310,7 +364,7 @@ l1_trend = l1(df.Close.values, regularizer)
 <section>
 <h3> Questions? </h3>
 <br>
-<img src="assets/qa_cartoon.jpg" height="400" width="600"/>
+<img src="assets/qa_cartoon.jpg" height="500" width="800"/>
 </section>
 
 			</div>
