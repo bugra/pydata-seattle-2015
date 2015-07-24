@@ -71,9 +71,15 @@
 					<p>Family of methods to be able to detect and predict tendencies and regularities in time series signals</p>
 					<br>
 					<ul>
-						<li> Mid to Long Term Trend </li>
-						<li> Seasonality(cycles) of data </li>
-						<li> When original signal is not very useful for processing </li>
+						<li> Depends on problem and domain </li>
+						<li> Medium to Long Term Trend </li>
+						<li> Mitigates seasonality(cycles) from data </li>
+					</ul>
+					<br><br>
+					<h4> Why? </h4>
+					<ul>
+						<li> Trends are very interpretable </li>
+						<li> Trends are easy to deal with whenee original signal is not very useful for processing </li>
 					</ul>
 				</section>
 
@@ -165,7 +171,6 @@ median_filtered_signal = sp_signal.medfilt(df.Close, window)
 ## Good to Know
 - Nonlinear
 - Very robust to noise
-- Hard to measure outliers and very significant short term changes
 - If the window size is very large, it could _shadow_ mid-term change
 - Trend signal may not be smooth(actually rarely is in practice)
 
